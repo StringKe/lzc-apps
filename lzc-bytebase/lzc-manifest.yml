@@ -1,0 +1,32 @@
+lzc-sdk-version: 0.1
+name: bytebase
+package: me.stringke.lzc-bytebase
+version: 3.2.1
+description: 
+license: https://choosealicense.com/licenses/mit/
+homepage: 
+author: stringke
+unsupported_platforms: 
+  - android
+  - ios
+  - tvos
+application:
+  subdomain: bytebase
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  routes:
+    - /=http://bytebase.me.stringke.lzc-bytebase.lzcapp:8080/
+  public_path:
+    - /
+    - "!/xxxxxxx"
+services:
+  bytebase:
+    image: "registry.lazycat.cloud/u89208082/bytebase/bytebase:943a61da81f7f5ce"
+    entrypoint: "bytebase --port 8080 --data /lzcapp/var --external-url https://bytebase.center.heiyu.space --debug --disable-metric --disable-sample"
+    health_check:
+      test_url: http://localhost:8080/healthz
+      start_period: 15s
+      disable: false
