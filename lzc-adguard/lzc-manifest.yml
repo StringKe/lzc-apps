@@ -1,34 +1,61 @@
 lzc-sdk-version: 0.1
-name: kotaemon
-package: me.stringke.app.kotaemon
-version: 0.9.11
-description: 
+name: adguard
+package: me.stringke.app.adguard
+version: 0.107.55
+description:
 license: https://choosealicense.com/licenses/mit/
-homepage: 
+homepage:
 author: stringke
-unsupported_platforms: 
+unsupported_platforms:
   - android
   - ios
   - tvos
 application:
-  subdomain: kotaemon
+  subdomain: adguard
   background_task: true
   multi_instance: false
   gpu_accel: false
   kvm_accel: false
   usb_accel: false
   routes:
-    - /=http://kotaemon.me.stringke.app.kotaemon.lzcapp:7860/
+    - /=http://adguard.me.stringke.app.adguard.lzcapp:3000/
+  ingress:
+    - protocol: tcp
+      port: 53
+      service: adguard
+    - protocol: udp
+      port: 53
+      service: adguard
+    - protocol: tcp
+      port: 67
+      service: adguard
+    - protocol: udp
+      port: 67
+      service: adguard
+    - protocol: tcp
+      port: 3000
+      service: adguard
+    - protocol: tcp
+      port: 853
+      service: adguard
+    - protocol: udp
+      port: 784
+      service: adguard
+    - protocol: udp
+      port: 853
+      service: adguard
+    - protocol: udp
+      port: 8853
+      service: adguard
+    - protocol: tcp
+      port: 5443
+      service: adguard
+    - protocol: udp
+      port: 5443
+      service: adguard
 services:
-  kotaemon:
-    image: "registry.lazycat.cloud/u89208082/cinnamon/kotaemon:ad106702ca20aceb"
-    environment:
-      - GRADIO_SERVER_NAME=0.0.0.0
-      - GRADIO_SERVER_PORT=7860
-      - NLTK_DATA=/lzcapp/var/nltk_data
+  adguard:
+    image: "registry.lazycat.cloud/u89208082/adguard/adguardhome:633154b8e53689a5"
     binds:
-      - /lzcapp/var/ktem_app_data:/app/ktem_app_data
-    health_check:
-      test_url: http://127.0.0.1:7860
-      start_period: 600s
-      disable: false
+      - /lzcapp/var/work:/opt/adguardhome/work
+      - /lzcapp/var/conf:/opt/adguardhome/conf
