@@ -1,0 +1,20 @@
+[project]
+name = "docs-vector"
+version = "0.1.0"
+description = ""
+authors = [{ name = "StringKe", email = "stringke@126.com" }]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "gitpython (>=3.1.44,<4.0.0)",
+    "markdown (>=3.7,<4.0)",
+    "langchain-community (>=0.3.14,<0.4.0)",
+    "langchain-core (>=0.3.30,<0.4.0)",
+    "langchain-text-splitters (>=0.3.5,<0.4.0)",
+    "langchain-openai (>=0.3.0,<0.4.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

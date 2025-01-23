@@ -1,0 +1,52 @@
+lzc-sdk-version: 0.1
+name: outline
+package: me.stringke.app.outline
+version: 0.81.1
+description:
+license: https://choosealicense.com/licenses/mit/
+homepage:
+author: stringke
+unsupported_platforms:
+  - android
+  - ios
+  - tvos
+application:
+  subdomain: outline
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  routes:
+    - /=http://outline.me.stringke.app.outline.lzcapp:3000/
+services:
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:0.81.1
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+      - SECRET_KEY=4d132d492a86b1a4f474d296826f5f66875aef8a92e5186677b615e5f1478cda
+      - DATABASE_URL=postgres://user:pass@localhost:5432/outline
+    binds:
+      - /lzcapp/var/outline_data:/var/lib/outline/data
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+  postgres:
+    image: postgres
+    binds:
+      - /lzcapp/var/outline_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "pass"
+      POSTGRES_DB: "outline"
